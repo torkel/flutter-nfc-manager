@@ -248,6 +248,20 @@ class NdefRecord {
     );
   }
 
+  /// Constructs an instance containing external (application-specific) data.
+  factory NdefRecord.createPayment(
+      String type, Uint8List data) {    
+    type = type.trim().toLowerCase();    
+    if (type.isEmpty) throw ('type is empty');
+
+    return NdefRecord(
+      typeNameFormat: NdefTypeNameFormat.nfcExternal,
+      type: Uint8List.fromList(utf8.encode(type)),
+      identifier: Uint8List.fromList([]),
+      payload: data,
+    );
+  }
+
   // _validateFormat
   static void _validateFormat(NdefTypeNameFormat format, Uint8List type,
       Uint8List identifier, Uint8List payload) {
